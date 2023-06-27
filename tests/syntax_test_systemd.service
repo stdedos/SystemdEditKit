@@ -1,4 +1,4 @@
-# SYNTAX TEST "Packages/Systemd/Systemd.sublime-syntax"
+# SYNTAX TEST "Packages/SystemdEditKit/Syntaxes/Systemd.sublime-syntax"
 #
 # Source: https://www.freedesktop.org/software/systemd/man/systemd.syntax.html
 [Section A]
