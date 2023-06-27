@@ -1,0 +1,71 @@
+%YAML 1.2
+# Reference: https://www.sublimetext.com/docs/3/syntax.html
+# A systemd syntax highlight file for Sublime Text 3
+#
+# Source: https://gist.github.com/thendrix/2330cf22ba6cae6a0c574fa22a7809fc
+#
+# Fix comment support, fix heading, add boolean, add string, switch source type -- thendrix
+---
+name: Systemd
+file_extensions:
+  - service
+  - socket
+  - device
+  - mount
+  - automount
+  - swap
+  - target
+  - path
+  - timer
+  - slice
+  - scope
+scope: source.systemd
+
+contexts:
+  main:
+    - match: '^([A-Za-z][A-Za-z0-9]*)(?=[\=])'
+      scope: keyword.other.service
+    - match: '^\[([A-Za-z]+)\]'
+      meta_scope: entity.name.section
+      captures:
+        1: entity.name.section.service
+    - match: '^\[[A-Za-z]+\]'
+      scope: entity.name.type.service
+    - match: '(\\\w)?'
+      scope: entity.name.service
+    - match: '\\'
+      scope: constant.character.escape
+    - match: '^(#|;).*\n?'
+      scope: comment.line.service
+      captures:
+        1: punctuation.definition.comment.service
+    - match: \b(?i:yes|no|0|1|true|false)\b
+      scope: constant.language.boolean.service
+    - match: '"'
+      scope: string.quoted.single
+      push: double_string
+    - match: "'"
+      scope: string.quoted.double
+      push: single_string
+
+  comments:
+    - match: '(#|;)'
+      scope: punctuation.definition.comment.service
+      push:
+       - meta_scope: comment.line.double-slash.service
+       - match: '\n'
+         pop: true
+
+  duoble_string:
+    - meta_scope: string.quoted.double.value
+    - match: \\.
+      scope: constant.character.escape.service
+    - match: '"'
+      pop: true
+
+  single_string:
+    - meta_scope: string.quoted.single.value
+    - match: \\.
+      scope: constant.character.escape.service
+    - match: "'"
+      pop: true

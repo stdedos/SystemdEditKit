@@ -1,0 +1,34 @@
+# this is a test file for Systemd.sublime-syntax
+name: Systemd Syntax Test
+file_extensions: [service, target, timer]
+scope: source.service
+
+# Comments
+- match: '^#.*\n?$'
+  scope: comment.line.service
+- match: '^;.*\n?$'
+  scope: comment.line.service
+
+# Sections
+- match: '^\[[A-Za-z]+\]'
+  scope: entity.name.type.service
+
+# Key-Value Pairs
+- match: '^([A-Za-z]+(\s*=\s*))'
+  scope: keyword.other.service
+
+# Values continued on next line
+- match: '(.*\\\n\s*.*)'
+  scope: constant.character.escape.service
+
+# Boolean Values
+- match: '\b(?i:yes|no|0|1|true|false)\b'
+  scope: constant.language.boolean.service
+
+# Double-Quoted Strings
+- match: '"[^"]*"'
+  scope: string.quoted.double.value
+
+# Single-Quoted Strings
+- match: '\'[^\']*\''
+  scope: string.quoted.single.value

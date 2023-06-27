@@ -1,0 +1,75 @@
+# SYNTAX TEST "Packages/Systemd/Systemd.sublime-syntax"
+#
+# Source: https://www.freedesktop.org/software/systemd/man/systemd.syntax.html
+[Section A]
+KeyOne=value 1
+# <- entity.name.type.service
+# ^ keyword.other.service
+#      ^ entity.name.service
+KeyTwo=value 2
+# ^ keyword.other.service
+#      ^ entity.name.service
+
+# a comment
+# <- comment.line.service
+
+[Section B]
+Setting="something" 'some thing' "…"
+# <- entity.name.type.service
+# ^ keyword.other.service
+#       ^ string.quoted.double.service
+#                   ^^^^^^^^^^^^ string.quoted.single.service
+#                                ^^^ string.quoted.double.service
+KeyTwo=value 2 \
+# ^ keyword.other.service
+#      ^ entity.name.service
+       value 2 continued
+#      ^ entity.name.service
+
+[Section C]
+KeyThree=value 3\
+# <- entity.name.type.service
+# ^ keyword.other.service
+#        ^ entity.name.service
+# this line is ignored
+# <- comment.line.service
+; this line is ignored too
+# <- comment.line.service
+       value 3 continued
+#      ^ entity.name.service
+
+[Section D]
+KeyThree = value 4\
+# <- entity.name.type.service
+# ^^^^^^ keyword.other.service
+#          ^ entity.name.service
+# this line is ignored
+# <- comment.line.service
+; this line is ignored too
+# <- comment.line.service
+       value 4 continued
+#      ^ entity.name.service
+
+[Section Double 1]
+Setting="something 'some thing' …"
+# <- entity.name.type.service
+# ^^^^^ keyword.other.service
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.service
+
+[Section Double 2]
+Setting="something \"some thing\" …"
+# <- entity.name.type.service
+# ^^^^^ keyword.other.service
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.service
+
+[Section Single 1]
+Setting='something "some thing" …'
+# <- entity.name.type.service
+# ^^^^^ keyword.other.service
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.service
+
+[Section Single 2]
+Setting='something \'some thing\' …'
+# <- entity.name.type.service
+# ^^^^^ keyword.other.service
+#       ^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.single.service
