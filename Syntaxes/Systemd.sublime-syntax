@@ -1,4 +1,6 @@
 %YAML 1.2
+# [PackageDev] target_format: plist, ext: tmLanguage
+#
 # Reference: https://www.sublimetext.com/docs/3/syntax.html
 # A systemd syntax highlight file for Sublime Text 3
 #
@@ -6,7 +8,7 @@
 #
 # Fix comment support, fix heading, add boolean, add string, switch source type -- thendrix
 ---
-name: Systemd
+name: systemd
 file_extensions:
   - service
   - socket
@@ -23,49 +25,46 @@ scope: source.systemd
 
 contexts:
   main:
-    - match: '^([A-Za-z][A-Za-z0-9]*)(?=[\=])'
-      scope: keyword.other.service
+    - include: comments
     - match: '^\[([A-Za-z]+)\]'
-      meta_scope: entity.name.section
+      scope: entity.name.section.systemd
       captures:
-        1: entity.name.section.service
-    - match: '^\[[A-Za-z]+\]'
-      scope: entity.name.type.service
-    - match: '(\\\w)?'
-      scope: entity.name.service
-    - match: '\\'
-      scope: constant.character.escape
-    - match: '^(#|;).*\n?'
-      scope: comment.line.service
-      captures:
-        1: punctuation.definition.comment.service
-    - match: \b(?i:yes|no|0|1|true|false)\b
-      scope: constant.language.boolean.service
+        1: keyword.control.section.systemd
+      push:
+        - meta_scope: meta.section.systemd
+        - match: '(?=\[)'
+          pop: true
+    - match: '^([A-Za-z][A-Za-z0-9]*)\s*(?=\=)'
+      scope: keyword.other.key.systemd
+    - match: '=\s*(.*)'
+      scope: string.unquoted.value.systemd
+    - match: '\b(?i:yes|no|0|1|true|false)\b'
+      scope: constant.language.boolean.systemd
     - match: '"'
-      scope: string.quoted.single
+      scope: punctuation.definition.string.begin.systemd
       push: double_string
     - match: "'"
-      scope: string.quoted.double
+      scope: punctuation.definition.string.begin.systemd
       push: single_string
 
   comments:
-    - match: '(#|;)'
-      scope: punctuation.definition.comment.service
-      push:
-       - meta_scope: comment.line.double-slash.service
-       - match: '\n'
-         pop: true
+    - match: '^(#|;).*\n?'
+      scope: comment.line.systemd
+      captures:
+        1: punctuation.definition.comment.service
 
-  duoble_string:
-    - meta_scope: string.quoted.double.value
+  double_string:
+    - meta_scope: string.quoted.double.systemd
     - match: \\.
-      scope: constant.character.escape.service
+      scope: constant.character.escape.systemd
     - match: '"'
+      scope: punctuation.definition.string.end.systemd
       pop: true
 
   single_string:
-    - meta_scope: string.quoted.single.value
+    - meta_scope: string.quoted.single.systemd
     - match: \\.
-      scope: constant.character.escape.service
+      scope: constant.character.escape.systemd
     - match: "'"
+      scope: punctuation.definition.string.end.systemd
       pop: true
