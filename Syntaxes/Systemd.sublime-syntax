@@ -36,10 +36,15 @@ contexts:
           pop: true
     - match: '^([A-Za-z][A-Za-z0-9]*)\s*(?=\=)'
       scope: keyword.other.key.systemd
+      push: key-value-pair
+
+  key-value-pair:
+    - meta_scope: meta.key-value.systemd
     - match: '=\s*'
       scope: keyword.operator.assignment.systemd
-    - match: '(.*)'
-      scope: string.unquoted.value.systemd
+      push: value
+
+  value:
     - match: '\b(?i:yes|no|0|1|true|false)\b'
       scope: constant.language.boolean.systemd
     - match: '"'
@@ -48,12 +53,39 @@ contexts:
     - match: "'"
       scope: punctuation.definition.string.begin.systemd
       push: single_string
+    - match: '(.*)(\\)$'
+      captures:
+        1: string.unquoted.value.systemd
+        2: punctuation.separator.continuation.line.systemd
+      push: multiline_value
+    - match: '.*$'
+      scope: string.unquoted.value.systemd
+      pop: true
+
+  multiline_value:
+    - include: comments
+    - match: '(.*)(\\)$'
+      captures:
+        1: string.unquoted.value.systemd
+        2: punctuation.separator.continuation.line.systemd
+    - match: '.*$'
+      scope: string.unquoted.value.systemd
+      pop: true
 
   comments:
     - match: '^(#|;).*\n?'
       scope: comment.line.systemd
       captures:
         1: punctuation.definition.comment.service
+
+  continuation:
+    - match: '\\$'
+      scope: punctuation.separator.continuation.systemd
+      push:
+        - meta_scope: meta.continuation.systemd
+        - include: comments
+        - match: '^'
+          pop: true
 
   double_string:
     - meta_scope: string.quoted.double.systemd

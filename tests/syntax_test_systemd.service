@@ -33,27 +33,27 @@ KeyTwo=value 2 \
 # <- entity.name.section.systemd
 KeyThree=value 3\
 # <- keyword.other.key.systemd
-#         ^ keyword.operator.assignment.systemd
-#           ^ string.unquoted.value.systemd
+#       ^ keyword.operator.assignment.systemd
+#        ^ string.unquoted.value.systemd
 # this line is ignored
 # <- comment.line.systemd
 ; this line is ignored too
 # <- comment.line.systemd
-       value 3 continued
-#      ^ string.unquoted.value.systemd
+         value 3 continued
+#        ^ string.unquoted.value.systemd
 
 [Section D]
 # <- entity.name.section.systemd
 KeyThree = value 4\
 # <- keyword.other.key.systemd
-#          ^ keyword.operator.assignment.systemd
-#            ^ string.unquoted.value.systemd
+#        ^ keyword.operator.assignment.systemd
+#          ^ string.unquoted.value.systemd
 # this line is ignored
 # <- comment.line.systemd
 ; this line is ignored too
 # <- comment.line.systemd
-       value 4 continued
-#      ^ string.unquoted.value.systemd
+           value 4 continued
+#          ^ string.unquoted.value.systemd
 
 [Section Double 1]
 # <- entity.name.section.systemd
