@@ -36,7 +36,9 @@ contexts:
           pop: true
     - match: '^([A-Za-z][A-Za-z0-9]*)\s*(?=\=)'
       scope: keyword.other.key.systemd
-    - match: '=\s*(.*)'
+    - match: '=\s*'
+      scope: keyword.operator.assignment.systemd
+    - match: '(.*)'
       scope: string.unquoted.value.systemd
     - match: '\b(?i:yes|no|0|1|true|false)\b'
       scope: constant.language.boolean.systemd
